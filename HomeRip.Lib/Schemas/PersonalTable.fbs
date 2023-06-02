@@ -1,0 +1,40 @@
+namespace HomeRip.Lib;
+attribute "fs_serializer";
+
+table MoveSpec {
+  Level:ushort;
+  Move:ushort;
+  LevelMastery:ushort;
+}
+
+table PersonalInfo {
+  Species:ushort;
+  Form:ushort;
+  Flag:bool;
+  Type1:ubyte;
+  Type2:ubyte;
+  Ability1:ushort;
+  Ability2:ushort;
+  AbilityH:ushort;
+  HP :ubyte;
+  ATK:ubyte;
+  DEF:ubyte;
+  SPA:ubyte;
+  SPD:ubyte;
+  SPE:ubyte;
+  GenderRatio:ubyte;
+  Byte15:ubyte;
+  Byte16:ubyte;
+  Ushort17:ushort;
+  Ushort18:ushort;
+  Byte19:ubyte;
+  Byte20:ubyte;
+  Moves:[MoveSpec] (required);
+  Unknown:ushort;
+}
+
+table PersonalTable (fs_serializer) {
+  Table:[PersonalInfo] (required);
+}
+
+root_type PersonalTable;
