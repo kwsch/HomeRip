@@ -24,7 +24,7 @@ public static class PrettyRipper
         using var writer = new StreamWriter(Path.ChangeExtension(file, ".pretty.txt"));
         foreach (var entry in table.Table)
         {
-            writer.WriteLine($"{spec[entry.Species]} {entry.Form} {entry.Flag}");
+            writer.WriteLine($"{spec[entry.Species]} {entry.Form} {entry.IsPresentInGame}");
             foreach (var move in entry.Moves)
             {
                 // PLA is not exactly this format. We're being silly with Mastery Level here.
