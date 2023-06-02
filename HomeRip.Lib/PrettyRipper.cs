@@ -31,9 +31,9 @@ public static class PrettyRipper
                 // Other formats don't have this field.
                 string line;
                 if (move.LevelMastery == 0)
-                    line = $"\t{move.Level}\t{moves[move.Move]}\t{move.Move}";
+                    line = $"\t{move.Level}\t{move.Move}\t{moves[move.Move]}";
                 else
-                    line = $"\t{move.Move}\t{moves[move.Level]}\t{move.Level}\t{move.LevelMastery}";
+                    line = $"\t{move.Move}\t{move.Level}\t{moves[move.Level]}\t{move.LevelMastery}";
                 writer.WriteLine(line);
             }
 
