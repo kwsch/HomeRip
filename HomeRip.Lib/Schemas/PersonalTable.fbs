@@ -10,7 +10,7 @@ table MoveSpec {
 table PersonalInfo {
   Species:ushort;
   Form:ushort;
-  Flag:bool;
+  IsPresentInGame:bool;
   Type1:ubyte;
   Type2:ubyte;
   Ability1:ushort;
