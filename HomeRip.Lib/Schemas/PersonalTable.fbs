@@ -10,7 +10,7 @@ table MoveSpec {
 table PersonalInfo {
   Species:ushort;
   Form:ushort;
-  Flag:bool;
+  IsPresentInGame:bool;
   Type1:ubyte;
   Type2:ubyte;
   Ability1:ushort;
@@ -23,14 +23,14 @@ table PersonalInfo {
   SPD:ubyte;
   SPE:ubyte;
   GenderRatio:ubyte;
-  Byte15:ubyte;
-  Byte16:ubyte;
-  Ushort17:ushort;
-  Ushort18:ushort;
-  Byte19:ubyte;
-  Byte20:ubyte;
+  EXPGrowth:ubyte;
+  Color:ubyte;
+  Height:ushort;
+  Weight:ushort;
+  HatchCycles:ubyte;
+  BaseFriendship:ubyte;
   Moves:[MoveSpec] (required);
-  Unknown:ushort;
+  PaldeaDexID:ushort;
 }
 
 table PersonalTable (fs_serializer) {
