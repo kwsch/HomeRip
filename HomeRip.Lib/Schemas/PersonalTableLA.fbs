@@ -1,12 +1,13 @@
 namespace HomeRip.Lib;
 attribute "fs_serializer";
 
-table MoveSpec {
-  Level:ushort;
+table MoveSpecLA {
   Move:ushort;
+  Level:ushort;
+  LevelMastery:ushort;
 }
 
-table PersonalInfo {
+table PersonalInfoLA {
   Species:ushort;
   Form:ushort;
   IsPresentInGame:bool;
@@ -28,12 +29,12 @@ table PersonalInfo {
   Weight:ushort;
   HatchCycles:ubyte;
   BaseFriendship:ubyte;
-  Moves:[MoveSpec] (required);
+  Moves:[MoveSpecLA] (required);
   PaldeaDexID:ushort;
 }
 
-table PersonalTable (fs_serializer) {
-  Table:[PersonalInfo] (required);
+table PersonalTableLA (fs_serializer) {
+  Table:[PersonalInfoLA] (required);
 }
 
-root_type PersonalTable;
+root_type PersonalTableLA;
