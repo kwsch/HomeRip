@@ -30,17 +30,27 @@ public static class PrettyRipper
         using var writer = new StreamWriter(Path.ChangeExtension(file, ".pretty.txt"));
         foreach (var entry in table.Table)
         {
-            writer.WriteLine($"{spec[entry.Species]} {entry.Form} {entry.IsPresentInGame}");
+            writer.WriteLine($"{GetSafe(spec, entry.Species)} {entry.Form} {entry.IsPresentInGame}");
+            writer.WriteLine($"Type: {(MoveType)entry.Type1}{(entry.Type1 != entry.Type2 ? $"/{(MoveType)entry.Type2}" : "")}");
+            writer.WriteLine($"Base Stats: {entry.HP:000}.{entry.ATK:000}.{entry.DEF:000}.{entry.SPA:000}.{entry.SPD:000}.{entry.SPE:000}");
+            writer.WriteLine($"Abilities: {GetSafe(game.Ability, entry.Ability1)}/{GetSafe(game.Ability, entry.Ability2)}/{GetSafe(game.Ability, entry.AbilityH)}");
             foreach (var move in entry.Moves)
             {
                 // PLA is not exactly this format. We're being silly with Mastery Level here.
                 // Other formats don't have this field.
-                var line = $"\t{move.Level}\t{move.Move}\t{moves[move.Move]}";
+                var line = $"\t{move.Level}\t{move.Move}\t{GetSafe(moves, move.Move)}";
                 writer.WriteLine(line);
             }
 
             writer.WriteLine();
         }
+    }
+
+    public static string GetSafe(IReadOnlyList<string> arr, int index)
+    {
+        if (index < 0 || index >= arr.Count)
+            return $"{index}";
+        return arr[index];
     }
 
     private static void RipFileLA(string file)
