@@ -1,19 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <LangVersion>11</LangVersion>
+    <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FlatSharp.Compiler" Version="7.1.1">
+    <PackageReference Include="FlatSharp.Compiler" Version="7.9.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="FlatSharp.Runtime" Version="7.1.1" />
-    <PackageReference Include="PKHeX.Core" Version="23.5.11" />
+    <PackageReference Include="FlatSharp.Runtime" Version="7.9.0" />
+    <PackageReference Include="PKHeX.Core" Version="26.3.20" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,3 +1,4 @@
+using System.Text.Json;
 using FlatSharp;
 
 namespace HomeRip.Lib;
@@ -15,7 +16,7 @@ public static class RawRipper
     {
         Console.WriteLine($"Ripping {file}...");
         var data = File.ReadAllBytes(file);
-        TTable result = DeserializeFrom<TTable>(data);
+        var result = DeserializeFrom<TTable>(data);
 
         var jsonFile = Path.ChangeExtension(file, ".json");
         DumpJson(result, jsonFile);
@@ -29,12 +30,14 @@ public static class RawRipper
         }
     }
 
-    private static T DeserializeFrom<T>(byte[] data) where T : class, IFlatBufferSerializable<T> => T.GreedyMutableSerializer.Parse(data);
+    private static T DeserializeFrom<T>(Memory<byte> data) where T : class, IFlatBufferSerializable<T> => T.GreedyMutableSerializer.Parse(data);
+
+
+    private static readonly JsonSerializerOptions Options = new() { WriteIndented = true, IncludeFields = true };
 
     private static void DumpJson<T>(T flat, string filePath) where T : class
     {
-        var opt = new System.Text.Json.JsonSerializerOptions { WriteIndented = true, IncludeFields = true };
-        var json = System.Text.Json.JsonSerializer.Serialize(flat, opt);
+        var json = JsonSerializer.Serialize(flat, Options);
 
         var fileName = Path.ChangeExtension(filePath, ".json");
         File.WriteAllText(fileName, json);

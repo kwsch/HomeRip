@@ -11,7 +11,7 @@ public static class PrettyRipper
         {
             bool hayabusa = Path.GetFileName(file).StartsWith("hayabusa");
             if (hayabusa)
-                RipFileLA(file);
+                RipFileLegendsArceus(file);
             else
                 RipFile(file);
         }
@@ -53,7 +53,7 @@ public static class PrettyRipper
         return arr[index];
     }
 
-    private static void RipFileLA(string file)
+    private static void RipFileLegendsArceus(string file)
     {
         Console.WriteLine($"Pretty ripping {file}...");
         var data = File.ReadAllBytes(file);
@@ -79,5 +79,5 @@ public static class PrettyRipper
         }
     }
 
-    private static T DeserializeFrom<T>(byte[] data) where T : class, IFlatBufferSerializable<T> => T.GreedyMutableSerializer.Parse(data);
+    private static T DeserializeFrom<T>(Memory<byte> data) where T : class, IFlatBufferSerializable<T> => T.GreedyMutableSerializer.Parse(data);
 }

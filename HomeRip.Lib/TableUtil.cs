@@ -10,12 +10,12 @@ public static class TableUtil
     /// </summary>
     /// <typeparam name="T">Object Type</typeparam>
     /// <param name="arr">Array of type T</param>
-    /// <returns>2 dimensional sheet of cells</returns>
+    /// <returns>2-dimensional sheet of cells</returns>
     public static string GetTable<T>(IEnumerable<T> arr) where T : notnull => string.Join(Environment.NewLine, GetTableRaw(arr));
 
-    private const char sep = '\t';
+    private const char Separator = '\t';
     private static IEnumerable<string> GetTableRaw<T>(IEnumerable<T> arr) where T : notnull
-        => Table(arr).Select(row => string.Join(sep, row));
+        => Table(arr).Select(row => string.Join(Separator, row));
 
     private static IEnumerable<IEnumerable<string>> Table<T>(IEnumerable<T> arr) where T : notnull
     {
@@ -49,6 +49,7 @@ public static class TableUtil
         if (obj is ulong u)
             return u.ToString("X16");
         if (obj is IEnumerable x and not string)
+            // ReSharper disable once GenericEnumeratorNotDisposed
             return string.Join('|', JoinEnumerator(x.GetEnumerator()).Select(GetFormattedString));
 
         var objType = obj.GetType();
@@ -66,6 +67,6 @@ public static class TableUtil
     private static IEnumerable<object> JoinEnumerator(IEnumerator x)
     {
         while (x.MoveNext())
-            yield return x.Current;
+            yield return x.Current!;
     }
 }

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="HomeRip.ConsoleApp/HomeRip.ConsoleApp.csproj" />
+  <Project Path="HomeRip.Lib/HomeRip.Lib.csproj" />
+</Solution>
