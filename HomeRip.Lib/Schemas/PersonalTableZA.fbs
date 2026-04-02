@@ -31,6 +31,8 @@ table PersonalInfoZA {
   BaseFriendship:ubyte;
   Moves:[MoveSpecZA] (required);
   LumioseDexID:ushort;
+  IsMegaOrPrimal:bool;
+  HasGenderDifference:bool;
 }
 
 table PersonalTableZA (fs_serializer) {
