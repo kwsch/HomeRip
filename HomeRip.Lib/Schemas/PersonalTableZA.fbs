@@ -1,0 +1,40 @@
+namespace HomeRip.Lib;
+attribute "fs_serializer";
+
+table MoveSpecZA {
+  Level:ushort;
+  Move:ushort;
+  LevelPlus:ushort;
+}
+
+table PersonalInfoZA {
+  Species:ushort;
+  Form:ushort;
+  IsPresentInGame:bool;
+  Type1:ubyte;
+  Type2:ubyte;
+  Ability1:ushort;
+  Ability2:ushort;
+  AbilityH:ushort;
+  HP :ubyte;
+  ATK:ubyte;
+  DEF:ubyte;
+  SPA:ubyte;
+  SPD:ubyte;
+  SPE:ubyte;
+  GenderRatio:ubyte;
+  EXPGrowth:ubyte;
+  Color:ubyte;
+  Height:ushort;
+  Weight:ushort;
+  HatchCycles:ubyte;
+  BaseFriendship:ubyte;
+  Moves:[MoveSpecZA] (required);
+  LumioseDexID:ushort;
+}
+
+table PersonalTableZA (fs_serializer) {
+  Table:[PersonalInfoZA] (required);
+}
+
+root_type PersonalTableZA;

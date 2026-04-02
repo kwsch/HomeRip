@@ -9,7 +9,16 @@ public static class RawRipper
         where TTable : class, IFlatBufferSerializable<TTable> where TSub : notnull
     {
         foreach (var file in files)
-            RipFile(file, sel);
+        {
+            bool hayabusa = Path.GetFileName(file).StartsWith("hayabusa");
+            bool ikkaku = Path.GetFileName(file).StartsWith("ikkaku");
+            if (hayabusa)
+                RipFile<PersonalTableLA, PersonalInfo>(file);
+            else if (ikkaku)
+                RipFile<PersonalTableZA, PersonalInfo>(file);
+            else
+                RipFile(file, sel);
+        }
     }
 
     public static void RipFile<TTable, TSub>(string file, Func<TTable, IEnumerable<TSub>>? sel = null) where TTable : class, IFlatBufferSerializable<TTable> where TSub : notnull
