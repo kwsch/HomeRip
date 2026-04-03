@@ -10,8 +10,11 @@ public static class PrettyRipper
         foreach (var file in files)
         {
             bool hayabusa = Path.GetFileName(file).StartsWith("hayabusa");
+            bool ikkaku = Path.GetFileName(file).StartsWith("ikkaku");
             if (hayabusa)
                 RipFileLegendsArceus(file);
+            else if (ikkaku)
+                RipFileLegendsZA(file);
             else
                 RipFile(file);
         }
@@ -72,6 +75,30 @@ public static class PrettyRipper
                 // PLA is not exactly this format. We're being silly with Mastery Level here.
                 // Other formats don't have this field.
                 string line = $"\t{move.Level}\t{move.LevelMastery}\t{move.Move}\t{moves[move.Move]}";
+                writer.WriteLine(line);
+            }
+
+            writer.WriteLine();
+        }
+    }
+
+    private static void RipFileLegendsZA(string file)
+    {
+        Console.WriteLine($"Pretty ripping {file}...");
+        var data = File.ReadAllBytes(file);
+        var table = DeserializeFrom<PersonalTableZA>(data);
+
+        // Write the result to a text file
+        var game = GameInfo.GetStrings("en");
+        var spec = game.Species;
+        var moves = game.Move;
+        using var writer = new StreamWriter(Path.ChangeExtension(file, ".pretty.txt"));
+        foreach (var entry in table.Table)
+        {
+            writer.WriteLine($"{spec[entry.Species]} {entry.Form} {entry.IsPresentInGame}");
+            foreach (var move in entry.Moves)
+            {
+                string line = $"\t{move.Level}\t{move.LevelPlus}\t{move.Move}\t{moves[move.Move]}";
                 writer.WriteLine(line);
             }
 

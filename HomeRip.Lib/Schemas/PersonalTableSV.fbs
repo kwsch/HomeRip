@@ -1,13 +1,9 @@
+include "MoveSpec.fbs";
+
 namespace HomeRip.Lib;
 attribute "fs_serializer";
 
-table MoveSpecLA {
-  Move:ushort;
-  Level:ushort;
-  LevelMastery:ushort;
-}
-
-table PersonalInfoLA {
+table PersonalInfoSV {
   Species:ushort;
   Form:ushort;
   IsPresentInGame:bool;
@@ -29,11 +25,14 @@ table PersonalInfoLA {
   Weight:ushort;
   HatchCycles:ubyte;
   BaseFriendship:ubyte;
-  Moves:[MoveSpecLA] (required);
+  Moves:[MoveSpec] (required);
+  PaldeaDexID:ushort;
+  KitakamiDexID:ubyte;
+  BlueberryDexID:ubyte;
 }
 
-table PersonalTableLA (fs_serializer) {
-  Table:[PersonalInfoLA] (required);
+table PersonalTableSV (fs_serializer) {
+  Table:[PersonalInfoSV] (required);
 }
 
-root_type PersonalTableLA;
+root_type PersonalTableSV;

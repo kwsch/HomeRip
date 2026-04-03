@@ -1,0 +1,7 @@
+namespace HomeRip.Lib;
+attribute "fs_serializer";
+
+table MoveSpec {
+  Level:ushort;
+  Move:ushort;
+}

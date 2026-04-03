@@ -1,13 +1,13 @@
 namespace HomeRip.Lib;
 attribute "fs_serializer";
 
-table MoveSpecLA {
-  Move:ushort;
+table MoveSpecZA {
   Level:ushort;
-  LevelMastery:ushort;
+  Move:ushort;
+  LevelPlus:ushort;
 }
 
-table PersonalInfoLA {
+table PersonalInfoZA {
   Species:ushort;
   Form:ushort;
   IsPresentInGame:bool;
@@ -29,11 +29,14 @@ table PersonalInfoLA {
   Weight:ushort;
   HatchCycles:ubyte;
   BaseFriendship:ubyte;
-  Moves:[MoveSpecLA] (required);
+  Moves:[MoveSpecZA] (required);
+  LumioseDexID:ushort;
+  IsMegaOrPrimal:bool;
+  HasGenderDifference:bool;
 }
 
-table PersonalTableLA (fs_serializer) {
-  Table:[PersonalInfoLA] (required);
+table PersonalTableZA (fs_serializer) {
+  Table:[PersonalInfoZA] (required);
 }
 
-root_type PersonalTableLA;
+root_type PersonalTableZA;
