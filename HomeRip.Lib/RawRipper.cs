@@ -10,14 +10,22 @@ public static class RawRipper
     {
         foreach (var file in files)
         {
-            bool hayabusa = Path.GetFileName(file).StartsWith("hayabusa");
-            bool ikkaku = Path.GetFileName(file).StartsWith("ikkaku");
-            if (hayabusa)
-                RipFile<PersonalTableLA, PersonalInfo>(file);
-            else if (ikkaku)
-                RipFile<PersonalTableZA, PersonalInfo>(file);
-            else
-                RipFile(file, sel);
+            var fn = Path.GetFileNameWithoutExtension(file);
+            switch (fn)
+            {
+                case "hayabusa_personal_total":
+                    RipFile<PersonalTableLA, PersonalInfo>(file);
+                    break;
+                case "titan_personal_total":
+                    RipFile<PersonalTableSV, PersonalInfo>(file);
+                    break;
+                case "ikkaku_personal_total":
+                    RipFile<PersonalTableZA, PersonalInfo>(file);
+                    break;
+                default:
+                    RipFile(file, sel);
+                    break;
+            };
         }
     }
 

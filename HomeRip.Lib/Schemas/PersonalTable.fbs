@@ -1,10 +1,7 @@
+include "MoveSpec.fbs";
+
 namespace HomeRip.Lib;
 attribute "fs_serializer";
-
-table MoveSpec {
-  Level:ushort;
-  Move:ushort;
-}
 
 table PersonalInfo {
   Species:ushort;
@@ -29,7 +26,6 @@ table PersonalInfo {
   HatchCycles:ubyte;
   BaseFriendship:ubyte;
   Moves:[MoveSpec] (required);
-  PaldeaDexID:ushort;
 }
 
 table PersonalTable (fs_serializer) {
