@@ -25,7 +25,7 @@ public static class RawRipper
                 default:
                     RipFile(file, sel);
                     break;
-            };
+            }
         }
     }
 

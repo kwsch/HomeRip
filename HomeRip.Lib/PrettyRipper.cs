@@ -9,8 +9,14 @@ public static class PrettyRipper
     {
         foreach (var file in files)
         {
-            bool hayabusa = Path.GetFileName(file).StartsWith("hayabusa");
-            bool ikkaku = Path.GetFileName(file).StartsWith("ikkaku");
+            var name = Path.GetFileName(file);
+            var orion = name.StartsWith("orion");
+            var hayabusa = name.StartsWith("hayabusa");
+            var ikkaku = name.StartsWith("ikkaku");
+
+            if (orion)
+                RipLearnset(file);
+
             if (hayabusa)
                 RipFileLegendsArceus(file);
             else if (ikkaku)
@@ -18,6 +24,47 @@ public static class PrettyRipper
             else
                 RipFile(file);
         }
+    }
+
+    private static void RipLearnset(string file)
+    {
+        Console.WriteLine($"Pretty learnset {file}...");
+        var data = File.ReadAllBytes(file);
+        var table = DeserializeFrom<PersonalTable>(data);
+
+        List<(int Index, ushort Species, byte Form, IList<MoveSpec> Learn)> moves = [];
+        var pt = PKHeX.Core.PersonalTable.SWSH;
+        foreach (var entry in table.Table)
+        {
+            var species = entry.Species;
+            var form = (byte)entry.Form;
+            var learnset = entry.Moves;
+            var index = pt.GetFormIndex(species, form);
+
+            moves.Add((index, species, form, learnset));
+            Console.WriteLine($"{(Species)species}-{form} = {index}");
+        }
+
+        var max = moves.Max(z => z.Index);
+        var result = new byte[]?[max + 1];
+        foreach (var (index, species, form, learnset) in moves)
+            result[index] = CompressLearnset(learnset);
+        for (var i = 0; i < result.Length; i++)
+            result[i] ??= [];
+
+        var bin = BinLinkerWriter.Compress(result, "ho"u8, z => z);
+        File.WriteAllBytes("lvlmove_ho.bin", bin);
+    }
+
+    private static byte[] CompressLearnset(IList<MoveSpec> list)
+    {
+        using var ms = new MemoryStream(list.Count * 3);
+        using var writer = new BinaryWriter(ms);
+        foreach (var move in list)
+            writer.Write((ushort)move.Move);
+        foreach (var move in list)
+            writer.Write((byte)move.Level);
+        return ms.ToArray();
     }
 
     private static void RipFile(string file)
